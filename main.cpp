@@ -1,9 +1,9 @@
-#include "./src/database.h"
+#include "./src/cplusark.h"
 
 int main()
 {
-    db::Parser p;
-    db::DataFrame df = p.readCVS("./task2.csv").splitBy(',').withDefaultHeaders().createDF();
+    cs::Parser p;
+    cs::DataFrame df = p.readCVS("./task2.csv").splitBy(',').withDefaultHeaders().createDF();
 
     // dataframe iterator
     for(auto row: df.dfIterator()){
@@ -29,6 +29,15 @@ int main()
     df.sortBy<int>("A", '<');
     df.show(10);
 
+    df.sortBy<float>("A", '<');
+    df.show(10);
+    
+    df.sortBy<double>("A", '<');
+    df.show(10);
+
+    df.sortBy<long>("A", '<');
+    df.show(10);
+
     df.sortBy<int>("B", '<');
     df.show(10);
 
@@ -49,6 +58,8 @@ int main()
 
     float avg = df.getAvg<float>("C");
     std::cerr << avg << std::endl;
+
+    // db::DataFrame new_df = df.select();
 
     return 0;
 }

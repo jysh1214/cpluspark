@@ -13,7 +13,7 @@
 #include <vector>
 #include <iostream>
 
-namespace db
+namespace cs
 {
 
 struct cvs_helper
@@ -46,6 +46,6 @@ class Parser
     cvs_helper readCVS(const char* filePath);
 };
 
-} // namespace db
+} // namespace cs
 
 #endif

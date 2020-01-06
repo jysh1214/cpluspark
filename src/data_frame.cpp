@@ -1,6 +1,6 @@
 #include "data_frame.h"
 
-using namespace db;
+using namespace cs;
 
 DataFrame::Row::Row(std::vector<std::string>& row): db_row(row){}
 
@@ -456,6 +456,11 @@ void DataFrame::addCol(std::string newHeader)
     for (Row& row: this->rowVector){
         row.push_back(std::string(""));
     }
+}
+
+DataFrame DataFrame::select(std::string headers ...)
+{
+
 }
 
 void DataFrame::show(size_t size)

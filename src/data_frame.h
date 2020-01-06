@@ -8,8 +8,9 @@
 #include <string>
 #include <exception>
 #include <iostream>
+#include <type_traits>
 
-namespace db
+namespace cs
 {
 
 class DataFrame
@@ -46,6 +47,7 @@ public:
     template<typename T> // int, float, double, long
     T getAvg(std::string header);
     void addCol(std::string newHeader);
+    DataFrame select(std::string headers ...);
 
     void show(size_t size);
 
@@ -56,6 +58,6 @@ private:
     std::vector<Row> rowVector;
 };
 
-} // namespace db
+} // namespace cs
 
 #endif
