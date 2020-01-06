@@ -1,4 +1,4 @@
-#include "./src/cplusark.h"
+#include "./src/cpluspark.h"
 
 int main()
 {
@@ -59,7 +59,12 @@ int main()
     float avg = df.getAvg<float>("C");
     std::cerr << avg << std::endl;
 
-    // db::DataFrame new_df = df.select();
+    cs::DataFrame test_df = p.readCVS("./123.txt").splitBy(',').withHeaders({"A","B","C"}).createDF();
+    std::cerr << test_df.getRowSize() << std::endl;;
+    test_df.show(1);
+
+    // db::DataFrame new_df = df.select("A");
+    // new_df.show(10);
 
     return 0;
 }

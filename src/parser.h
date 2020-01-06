@@ -12,6 +12,7 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include <initializer_list>
 
 namespace cs
 {
@@ -26,6 +27,7 @@ struct cvs_helper
 
     cvs_helper& splitBy(const char split);
     cvs_helper& withDefaultHeaders();
+    cvs_helper& withHeaders(std::initializer_list<std::string> list);
     DataFrame createDF();
 
     bool withHeads;
@@ -33,6 +35,7 @@ struct cvs_helper
     char split;
 
     private:
+    std::vector<std::string> customizedHeaders;
     bool headerSetting = false;
     bool splitSetting = false;
 };

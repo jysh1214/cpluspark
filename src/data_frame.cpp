@@ -466,7 +466,7 @@ DataFrame DataFrame::select(std::string headers ...)
 void DataFrame::show(size_t size)
 {
     // precondition
-    assert(size < this->rowVector.size());
+    assert(size <= this->rowVector.size());
 
     using namespace std;
     size_t colSize = this->headersVector.size();

@@ -25,6 +25,16 @@ cvs_helper& cvs_helper::withDefaultHeaders()
     return *this;
 }
 
+cvs_helper& cvs_helper::withHeaders(std::initializer_list<std::string> list)
+{
+    for (std::string header: list)
+        this->customizedHeaders.push_back(header);
+
+    this->withHeads = false;
+    this->headerSetting = true;
+    return *this;
+}
+
 DataFrame cvs_helper::createDF()
 {
     // precondition
@@ -33,23 +43,25 @@ DataFrame cvs_helper::createDF()
     using namespace std;
     
     DataFrame df;
+    // customized headers
+    if (!this->withHeads){
+        df.addHeaders(this->customizedHeaders);
+    }
     int current_point = 0;
-    bool firstLine = true;
     vector<string> row;
     for (string::size_type i = 0; i <= this->cvs_content.size(); ++i){
         if (cvs_content[i] == this->split || cvs_content[i] == '\n' || i == cvs_content.size()){
             string item = cvs_content.substr(current_point, i-current_point);
             current_point = i + 1;
             row.push_back(item);
-            
+
             // get headers in first line
-            if (cvs_content[i] == '\n' && firstLine && this->withHeads){
+            if (cvs_content[i] == '\n' && this->withHeads){
                 df.addHeaders(row);
                 row.clear();
-                firstLine = false;
+                this->withHeads = false;
             }
-            // customized headers
-            else if (cvs_content[i] == '\n' && (!this->withHeads || !firstLine)){
+            else if (cvs_content[i] == '\n'){
                 df.addRow(row);
                 row.clear();
             }
