@@ -53,19 +53,20 @@ DataFrame cvs_helper::createDF()
         if (cvs_content[i] == this->split || cvs_content[i] == '\n' || i == cvs_content.size()){
             string item = cvs_content.substr(current_point, i-current_point);
             current_point = i + 1;
-            row.push_back(item);
-
-            // get headers in first line
-            if (cvs_content[i] == '\n' && this->withHeads){
-                df.addHeaders(row);
-                row.clear();
-                this->withHeads = false;
-            }
-            else if (cvs_content[i] == '\n'){
+            if (item.size() > 0) row.push_back(item);
+        }
+        // get headers in first line
+        if (this->withHeads && cvs_content[i] == '\n'){
+            df.addHeaders(row);
+            row.clear();
+            this->withHeads = false;
+        }
+        if (cvs_content[i] == '\n' || i == cvs_content.size()){
+            if (row.size() > 0){
                 df.addRow(row);
                 row.clear();
             }
-        } // create each row in dataframe
+        }
     } // read whole csv file
 
     return df;

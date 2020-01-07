@@ -59,9 +59,13 @@ int main()
     float avg = df.getAvg<float>("C");
     std::cerr << avg << std::endl;
 
-    cs::DataFrame test_df = p.readCVS("./123.txt").splitBy(',').withHeaders({"A","B","C"}).createDF();
-    std::cerr << test_df.getRowSize() << std::endl;;
-    test_df.show(1);
+    cs::DataFrame test1_df = p.readCVS("./123.txt").splitBy(',').withDefaultHeaders().createDF();
+    std::cerr << test1_df.getRowSize() << std::endl;;
+    test1_df.show(1);
+
+    cs::DataFrame test2_df = p.readCVS("./123.txt").splitBy(',').withHeaders({"A","B","C"}).createDF();
+    std::cerr << test2_df.getRowSize() << std::endl;;
+    test2_df.show(2);
 
     // db::DataFrame new_df = df.select("A");
     // new_df.show(10);
