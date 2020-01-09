@@ -458,9 +458,44 @@ void DataFrame::addCol(std::string newHeader)
     }
 }
 
-DataFrame DataFrame::select(std::string headers ...)
-{
+bool exist(std::string str, std::vector<std::string>& vec){
+    for (auto item: vec){
+        if (str == item) return true;
+    }
 
+    return false;
+}
+
+DataFrame DataFrame::select(std::initializer_list<std::string> list)
+{
+    // precondition
+    assert(([=]()-> bool{
+        for (auto input: list){
+            if (!exist(input, this->headersVector)) return false;
+        } return true;
+    })());
+
+    // DataFrame df;
+
+}
+
+void DataFrame::removeCol(std::string header)
+{
+    // precondition
+    assert(([=]()-> bool{
+        for (auto item: DataFrame::headersMap){
+            if (item.first == header) return true;
+        } return false;
+    })());
+
+    int index = this->headersMap["header"];
+    this->headersVector.erase(this->headersVector.begin() + index);
+
+    for (auto& row: this->rowVector){
+        row.erase(row.begin() + index);
+    }
+
+    this->headersMap.erase(header);
 }
 
 void DataFrame::show(size_t size)

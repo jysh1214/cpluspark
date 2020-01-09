@@ -9,6 +9,7 @@
 #include <exception>
 #include <iostream>
 #include <type_traits>
+#include <initializer_list>
 
 namespace cs
 {
@@ -47,7 +48,8 @@ public:
     template<typename T> // int, float, double, long
     T getAvg(std::string header);
     void addCol(std::string newHeader);
-    DataFrame select(std::string headers ...);
+    DataFrame select(std::initializer_list<std::string> list);
+    void removeCol(std::string header);
 
     void show(size_t size);
 

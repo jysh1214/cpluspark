@@ -67,6 +67,9 @@ int main()
     std::cerr << test2_df.getRowSize() << std::endl;;
     test2_df.show(2);
 
+    test2_df.removeCol("C");
+    test2_df.show(2);
+
     // db::DataFrame new_df = df.select("A");
     // new_df.show(10);
 
