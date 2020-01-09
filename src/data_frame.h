@@ -29,6 +29,7 @@ public:
         size_t size();
         void push_back(std::string str);
         void print(size_t i);
+        void erase(size_t i);
         private:
         std::vector<std::string> db_row;
     };

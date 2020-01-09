@@ -52,6 +52,11 @@ void DataFrame::Row::print(size_t i)
     }
 }
 
+void DataFrame::Row::erase(size_t i)
+{
+    db_row.erase(db_row.begin() + i);
+}
+
 DataFrame::DataFrame(){}
 
 void DataFrame::addHeaders(std::vector<std::string>& headers)
@@ -60,7 +65,7 @@ void DataFrame::addHeaders(std::vector<std::string>& headers)
         int i = -1;
         for (auto header: headers){
             this->headersVector.push_back(header);
-            DataFrame::headersMap[header] = i += 1;
+            this->headersMap[header] = i += 1;
         }
     } catch(const std::exception& e) {
         std::cerr << e.what() << std::endl;
@@ -488,11 +493,11 @@ void DataFrame::removeCol(std::string header)
         } return false;
     })());
 
-    int index = this->headersMap["header"];
+    int index = this->headersMap[header];
     this->headersVector.erase(this->headersVector.begin() + index);
 
     for (auto& row: this->rowVector){
-        row.erase(row.begin() + index);
+        row.erase(index);
     }
 
     this->headersMap.erase(header);
