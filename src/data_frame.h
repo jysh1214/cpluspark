@@ -18,6 +18,8 @@ class DataFrame
 {
 public:
     DataFrame();
+    DataFrame(const DataFrame*);
+    DataFrame(const DataFrame&);
     virtual ~DataFrame(){}
 
     struct Row: public std::vector<std::string>
@@ -49,7 +51,6 @@ public:
     template<typename T> // int, float, double, long
     T getAvg(std::string header);
     void addCol(std::string newHeader);
-    DataFrame select(std::initializer_list<std::string> list);
     void removeCol(std::string header);
 
     void show(size_t size);

@@ -1,13 +1,12 @@
 .PHONY: clean dirs
 
-BIN=bin
-SRC=src
-TEST=test
 OBJ=obj
+BIN=bin
+SRC=../../src
 
-all: dirs $(BIN)/main
+all: dirs ./show
 
-$(BIN)/main: main.cpp\
+./show: show.cpp\
 	$(OBJ)/parser.o\
 	$(OBJ)/data_frame.o
 	g++-7 -Wall -g -std=c++17 $^ -o $@
@@ -19,10 +18,10 @@ $(OBJ)/data_frame.o: $(SRC)/data_frame.cpp $(SRC)/data_frame.h
 	g++-7 -Wall -g -std=c++17 -c $< -o $@
 
 dirs:
-	mkdir -p $(SRC) $(TEST) $(BIN) $(OBJ)
+	mkdir -p $(SRC) $(OBJ)
 
 clean:
-	rm -rf $(BIN) $(OBJ) .vscode
+	rm -rf $(OBJ) show .vscode
 
 state:
-	wc src/* test/*
+	wc src/*
