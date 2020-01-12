@@ -4,9 +4,9 @@ OBJ=obj
 BIN=bin
 SRC=../../src
 
-all: dirs ./short
+all: dirs ./removeCol
 
-./short: short.cpp\
+./removeCol: removeCol.cpp\
 	$(OBJ)/parser.o\
 	$(OBJ)/data_frame.o
 	g++-7 -Wall -g -std=c++17 $^ -o $@
@@ -21,7 +21,7 @@ dirs:
 	mkdir -p $(SRC) $(OBJ)
 
 clean:
-	rm -rf $(OBJ) short .vscode
+	rm -rf $(OBJ) removeCol .vscode
 
 state:
 	wc src/*

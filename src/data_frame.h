@@ -41,23 +41,24 @@ public:
     size_t getRowSize();
     size_t getColSize();
     std::vector<std::string> getHeaders();
+    size_t getHeaderValue(const std::string header);
     std::vector<Row>& dfIterator();
     template<typename T> // std::string, int, float, double, long
-    void sortBy(std::string header, char op);
+    void sortBy(const std::string header, const char op);
     template<typename T> // std::string, int, float, double, long
-    T getMax(std::string header);
+    T getMax(const std::string header);
     template<typename T> // std::string, int, float, double, long
-    T getMin(std::string header);
+    T getMin(const std::string header);
     template<typename T> // int, float, double, long
-    T getAvg(std::string header);
-    void addCol(std::string newHeader);
-    void removeCol(std::string header);
+    T getAvg(const std::string header);
+    void addCol(const std::string newHeader);
+    void removeCol(const std::string header);
+    DataFrame selectCol(const std::initializer_list<std::string> list);
 
     void show(size_t size);
 
-    static std::map<std::string, size_t> headersMap;
-
 private:
+    std::map<std::string, size_t> headersMap;
     std::vector<std::string> headersVector;
     std::vector<Row> rowVector;
 };

@@ -4,7 +4,7 @@ inline bool exist(std::string str, std::vector<std::string>& vec){
     for (auto item: vec){
         if (str == item) return true;
     }
-
+    
     return false;
 }
 
@@ -16,29 +16,7 @@ DataFrame::Row::Row(std::vector<std::string>&& row): db_row(row){}
 
 std::string& DataFrame::Row::operator[](size_t i)
 {
-    // preconditions
-    assert(i < DataFrame::headersMap.size());
-
     return this->db_row[i];
-}
-
-std::string& DataFrame::Row::operator[](std::string str)
-{
-    // preconditions
-    assert(str.size() > 0);
-    assert(str.c_str() != nullptr);
-    assert(([=]()-> bool{ // valid header
-        for (auto item: DataFrame::headersMap){
-            // std::cerr << "match: " << str << "," <<item.first << std::endl;
-            if (str == item.first) return true;
-        } return false;
-    })());
-
-    // postconditions
-
-    // invariants
-
-    return this->db_row[DataFrame::headersMap[str]];
 }
 
 size_t DataFrame::Row::size()
@@ -53,7 +31,7 @@ void DataFrame::Row::push_back(std::string str)
 
 void DataFrame::Row::print(size_t i)
 {
-    if (db_row[i].c_str() == nullptr){
+    if (db_row[i].c_str() == nullptr || db_row[i].size() == 0){
         std::cerr << "null";
     }
     else{
@@ -130,300 +108,334 @@ std::vector<std::string> DataFrame::getHeaders()
     return templateVector;
 }
 
+size_t DataFrame::getHeaderValue(const std::string header)
+{
+    return this->headersMap[header];
+}
+
 std::vector<DataFrame::Row>& DataFrame::dfIterator()
 {
     return this->rowVector;
 }
 
 template<>
-void DataFrame::sortBy<std::string>(std::string header, char op)
+void DataFrame::sortBy<std::string>(const std::string header, const char op)
 {
     // precondition
     assert(op == '<' || op == '>');
 
+    size_t headerValue = this->headersMap[header];
     if (op == '<'){
         std::sort(this->rowVector.begin(), this->rowVector.end(), \
-        [=](Row& lrow, Row& rrow){return lrow[header] < rrow[header];});
+        [=](Row& lrow, Row& rrow){return lrow[headerValue] < rrow[headerValue];});
     }
     else if (op == '>'){
         std::sort(this->rowVector.begin(), this->rowVector.end(), \
-        [=](Row& lrow, Row& rrow){return lrow[header] > rrow[header];});        
+        [=](Row& lrow, Row& rrow){return lrow[headerValue] > rrow[headerValue];});        
     }
 }
 
 template<>
-void DataFrame::sortBy<int>(std::string header, char op)
+void DataFrame::sortBy<int>(const std::string header, const char op)
 {
     // precondition
     assert(op == '<' || op == '>');
 
+    size_t headerValue = this->headersMap[header];
     if (op == '<'){
         std::sort(this->rowVector.begin(), this->rowVector.end(), \
         [=](Row& lrow, Row& rrow){
-            return std::stoi(lrow[header]) < std::stoi(rrow[header]);});
+            return std::stoi(lrow[headerValue]) < std::stoi(rrow[headerValue]);});
     }
     else if (op == '>'){
         std::sort(this->rowVector.begin(), this->rowVector.end(), \
         [=](Row& lrow, Row& rrow){
-            return std::stoi(lrow[header]) > std::stoi(rrow[header]);});        
+            return std::stoi(lrow[headerValue]) > std::stoi(rrow[headerValue]);});        
     }
 }
 
 template<>
-void DataFrame::sortBy<float>(std::string header, char op)
+void DataFrame::sortBy<float>(const std::string header, const char op)
 {
     // precondition
     assert(op == '<' || op == '>');
 
+    size_t headerValue = this->headersMap[header];
     if (op == '<'){
         std::sort(this->rowVector.begin(), this->rowVector.end(), \
         [=](Row& lrow, Row& rrow){
-            return std::stof(lrow[header]) < std::stof(rrow[header]);});
+            return std::stof(lrow[headerValue]) < std::stof(rrow[headerValue]);});
     }
     else if (op == '>'){
         std::sort(this->rowVector.begin(), this->rowVector.end(), \
         [=](Row& lrow, Row& rrow){
-            return std::stof(lrow[header]) > std::stof(rrow[header]);});        
+            return std::stof(lrow[headerValue]) > std::stof(rrow[headerValue]);});        
     }
 }
 
 template<>
-void DataFrame::sortBy<double>(std::string header, char op)
+void DataFrame::sortBy<double>(const std::string header, const char op)
 {
     // precondition
     assert(op == '<' || op == '>');
 
+    size_t headerValue = this->headersMap[header];
     if (op == '<'){
         std::sort(this->rowVector.begin(), this->rowVector.end(), \
         [=](Row& lrow, Row& rrow){
-            return std::stod(lrow[header]) < std::stod(rrow[header]);});
+            return std::stod(lrow[headerValue]) < std::stod(rrow[headerValue]);});
     }
     else if (op == '>'){
         std::sort(this->rowVector.begin(), this->rowVector.end(), \
         [=](Row& lrow, Row& rrow){
-            return std::stod(lrow[header]) > std::stod(rrow[header]);});        
+            return std::stod(lrow[headerValue]) > std::stod(rrow[headerValue]);});        
     }
 }
 
 template<>
-void DataFrame::sortBy<long>(std::string header, char op)
+void DataFrame::sortBy<long>(const std::string header, const char op)
 {
     // precondition
     assert(op == '<' || op == '>');
 
+    size_t headerValue = this->headersMap[header];
     if (op == '<'){
         std::sort(this->rowVector.begin(), this->rowVector.end(), \
         [=](Row& lrow, Row& rrow){
-            return std::stol(lrow[header]) < std::stol(rrow[header]);});
+            return std::stol(lrow[headerValue]) < std::stol(rrow[headerValue]);});
     }
     else if (op == '>'){
         std::sort(this->rowVector.begin(), this->rowVector.end(), \
         [=](Row& lrow, Row& rrow){
-            return std::stol(lrow[header]) > std::stol(rrow[header]);});        
+            return std::stol(lrow[headerValue]) > std::stol(rrow[headerValue]);});        
     }
 }
 
 template<>
-std::string DataFrame::getMax<std::string>(std::string header)
+std::string DataFrame::getMax<std::string>(const std::string header)
 {
     // precondition
     assert(exist(header, this->headersVector));
 
-    std::string max = this->rowVector[0][header];
+    size_t headerValue = this->headersMap[header];
+    std::string max = this->rowVector[0][headerValue];
     for (auto row: this->rowVector){
-        max = row[header] >= max ?
-        row[header] : max;
+        max = row[headerValue] >= max ?
+        row[headerValue] : max;
     }
+
     return max;
 }
 
 template<>
-int DataFrame::getMax<int>(std::string header)
+int DataFrame::getMax<int>(const std::string header)
 {
     // precondition
     assert(exist(header, this->headersVector));
 
-    int max = std::stoi(this->rowVector[0][header]);
+    size_t headerValue = this->headersMap[header];
+    int max = std::stoi(this->rowVector[0][headerValue]);
     for (auto row: this->rowVector){
-        max = std::stoi(row[header]) >= max ?
-        std::stoi(row[header]) : max;
+        max = std::stoi(row[headerValue]) >= max ?
+        std::stoi(row[headerValue]) : max;
     }
+
     return max;
 }
 
 template<>
-float DataFrame::getMax<float>(std::string header)
+float DataFrame::getMax<float>(const std::string header)
 {
     // precondition
     assert(exist(header, this->headersVector));
 
-    float max = std::stof(this->rowVector[0][header]);
+    size_t headerValue = this->headersMap[header];
+    float max = std::stof(this->rowVector[0][headerValue]);
     for (auto row: this->rowVector){
-        max = std::stof(row[header]) >= max ?
-        std::stof(row[header]) : max;
+        max = std::stof(row[headerValue]) >= max ?
+        std::stof(row[headerValue]) : max;
     }
+
     return max;
 }
 
 template<>
-double DataFrame::getMax<double>(std::string header)
+double DataFrame::getMax<double>(const std::string header)
 {
     // precondition
     assert(exist(header, this->headersVector));
 
-    double max = std::stod(this->rowVector[0][header]);
+    size_t headerValue = this->headersMap[header];
+    double max = std::stod(this->rowVector[0][headerValue]);
     for (auto row: this->rowVector){
-        max = std::stod(row[header]) >= max ?
-        std::stod(row[header]) : max;
+        max = std::stod(row[headerValue]) >= max ?
+        std::stod(row[headerValue]) : max;
     }
+
     return max;
 }
 
 template<>
-long DataFrame::getMax<long>(std::string header)
+long DataFrame::getMax<long>(const std::string header)
 {
     // precondition
     assert(exist(header, this->headersVector));
 
-    long max = std::stol(this->rowVector[0][header]);
+    size_t headerValue = this->headersMap[header];
+    long max = std::stol(this->rowVector[0][headerValue]);
     for (auto row: this->rowVector){
-        max = std::stol(row[header]) >= max ?
-        std::stol(row[header]) : max;
+        max = std::stol(row[headerValue]) >= max ?
+        std::stol(row[headerValue]) : max;
     }
+
     return max;
 }
 
 template<>
-std::string DataFrame::getMin<std::string>(std::string header)
+std::string DataFrame::getMin<std::string>(const std::string header)
 {
     // precondition
     assert(exist(header, this->headersVector));
 
-    std::string min = this->rowVector[0][header];
+    size_t headerValue = this->headersMap[header];
+    std::string min = this->rowVector[0][headerValue];
     for (auto row: this->rowVector){
-        min = row[header] <= min ?
-        row[header] : min;
+        min = row[headerValue] <= min ?
+        row[headerValue] : min;
     }
+
     return min;
 }
 
 template<>
-int DataFrame::getMin<int>(std::string header)
+int DataFrame::getMin<int>(const std::string header)
 {
     // precondition
     assert(exist(header, this->headersVector));
 
-    int min = std::stoi(this->rowVector[0][header]);
+    size_t headerValue = this->headersMap[header];
+    int min = std::stoi(this->rowVector[0][headerValue]);
     for (auto row: this->rowVector){
-        min = std::stoi(row[header]) <= min ?
-        std::stoi(row[header]) : min;
+        min = std::stoi(row[headerValue]) <= min ?
+        std::stoi(row[headerValue]) : min;
     }
+
     return min;
 }
 
 template<>
-float DataFrame::getMin<float>(std::string header)
+float DataFrame::getMin<float>(const std::string header)
 {
     // precondition
     assert(exist(header, this->headersVector));
 
-    float min = std::stof(this->rowVector[0][header]);
+    size_t headerValue = this->headersMap[header];
+    float min = std::stof(this->rowVector[0][headerValue]);
     for (auto row: this->rowVector){
-        min = std::stof(row[header]) <= min ?
-        std::stof(row[header]) : min;
+        min = std::stof(row[headerValue]) <= min ?
+        std::stof(row[headerValue]) : min;
     }
+
     return min;
 }
 
 template<>
-double DataFrame::getMin<double>(std::string header)
+double DataFrame::getMin<double>(const std::string header)
 {
     // precondition
     assert(exist(header, this->headersVector));
 
-    double min = std::stod(this->rowVector[0][header]);
+    size_t headerValue = this->headersMap[header];
+    float min = std::stod(this->rowVector[0][headerValue]);
     for (auto row: this->rowVector){
-        min = std::stod(row[header]) <= min ?
-        std::stod(row[header]) : min;
+        min = std::stod(row[headerValue]) <= min ?
+        std::stod(row[headerValue]) : min;
     }
+    
     return min;
 }
 
 template<>
-long DataFrame::getMin<long>(std::string header)
+long DataFrame::getMin<long>(const std::string header)
 {
     // precondition
     assert(exist(header, this->headersVector));
 
-    long min = std::stol(this->rowVector[0][header]);
+    size_t headerValue = this->headersMap[header];
+    float min = std::stol(this->rowVector[0][headerValue]);
     for (auto row: this->rowVector){
-        min = std::stol(row[header]) <= min ?
-        std::stol(row[header]) : min;
+        min = std::stol(row[headerValue]) <= min ?
+        std::stol(row[headerValue]) : min;
     }
+    
     return min;
 }
 
 template<>
-int DataFrame::getAvg<int>(std::string header)
+int DataFrame::getAvg<int>(const std::string header)
 {
     // precondition
     assert(exist(header, this->headersVector));
     assert(this->rowVector.size() > 0);
 
+    size_t headerValue = this->headersMap[header];
     int sum = 0;
     for (Row row: this->rowVector){
-        sum += std::stoi(row[header]);
+        sum += std::stoi(row[headerValue]);
     }
 
     return int(sum/this->rowVector.size());
 }
 
 template<>
-float DataFrame::getAvg<float>(std::string header)
+float DataFrame::getAvg<float>(const std::string header)
 {
     // precondition
     assert(exist(header, this->headersVector));
     assert(this->rowVector.size() > 0);
 
+    size_t headerValue = this->headersMap[header];
     float sum = 0;
     for (Row row: this->rowVector){
-        sum += std::stof(row[header]);
+        sum += std::stof(row[headerValue]);
     }
 
     return float(sum/this->rowVector.size());
 }
 
 template<>
-double DataFrame::getAvg<double>(std::string header)
+double DataFrame::getAvg<double>(const std::string header)
 {
     // precondition
     assert(exist(header, this->headersVector));
     assert(this->rowVector.size() > 0);
 
+    size_t headerValue = this->headersMap[header];
     double sum = 0;
     for (Row row: this->rowVector){
-        sum += std::stod(row[header]);
+        sum += std::stod(row[headerValue]);
     }
 
     return double(sum/this->rowVector.size());
 }
 
 template<>
-long DataFrame::getAvg<long>(std::string header)
+long DataFrame::getAvg<long>(const std::string header)
 {
     // precondition
     assert(exist(header, this->headersVector));
     assert(this->rowVector.size() > 0);
 
+    size_t headerValue = this->headersMap[header];
     long sum = 0;
     for (Row row: this->rowVector){
-        sum += std::stol(row[header]);
+        sum += std::stol(row[headerValue]);
     }
 
     return long(sum/this->rowVector.size());
 }
 
-void DataFrame::addCol(std::string newHeader)
+void DataFrame::addCol(const std::string newHeader)
 {
     // precondition
     assert(([=]()-> bool{
@@ -431,6 +443,9 @@ void DataFrame::addCol(std::string newHeader)
             if (item.first == newHeader) return false;
         } return true;
     })());
+    size_t headersMapSize = this->headersMap.size();
+    size_t headersVectorSize = this->headersVector.size();
+    size_t rowVectorSize = this->rowVector.size();
 
     this->headersMap[newHeader] = this->headersVector.size();
     this->headersVector.push_back(newHeader);
@@ -438,9 +453,15 @@ void DataFrame::addCol(std::string newHeader)
     for (Row& row: this->rowVector){
         row.push_back(std::string(""));
     }
+    
+    // postconditions
+    assert(this->headersMap.size() == headersMapSize + 1);
+    assert(this->headersVector.size() == headersVectorSize + 1);
+    // invariants
+    assert(this->rowVector.size() == rowVectorSize);
 }
 
-void DataFrame::removeCol(std::string header)
+void DataFrame::removeCol(const std::string header)
 {
     // precondition
     assert(([=]()-> bool{
@@ -448,6 +469,9 @@ void DataFrame::removeCol(std::string header)
             if (item.first == header) return true;
         } return false;
     })());
+    size_t headersMapSize = this->headersMap.size();
+    size_t headersVectorSize = this->headersVector.size();
+    size_t rowVectorSize = this->rowVector.size();
 
     int index = this->headersMap[header];
     this->headersVector.erase(this->headersVector.begin() + index);
@@ -456,7 +480,52 @@ void DataFrame::removeCol(std::string header)
         row.erase(index);
     }
 
-    this->headersMap.erase(header);
+    // reset headersMap
+    this->headersMap.clear();
+    int i = -1;
+    for (auto header: this->headersVector){
+        this->headersMap[header] = i += 1;
+    }
+
+    // postconditions
+    assert(this->headersMap.size() == headersMapSize - 1);
+    assert(this->headersVector.size() == headersVectorSize - 1);
+    // invariants
+    assert(this->rowVector.size() == rowVectorSize);
+}
+
+DataFrame DataFrame::selectCol(const std::initializer_list<std::string> list)
+{
+    // precondition
+    assert(([=]()-> bool{
+        for (auto item: list){
+            if (!exist(item, this->headersVector))
+                return false;
+        }
+        return true;
+    })());
+    size_t headersMapSize = this->headersMap.size();
+    size_t headersVectorSize = this->headersVector.size();
+    size_t rowVectorSize = this->rowVector.size();
+    std::vector<std::string> list_vec = list;
+
+    DataFrame new_df(this);
+    for (auto header: this->headersVector){
+        if (!exist(header, list_vec)){
+            new_df.removeCol(header);
+        }
+    }
+
+    // postconditions
+    assert(new_df.getColSize() == list.size());
+    assert(new_df.headersMap.size() == list.size());
+    // invariants
+    assert(new_df.getRowSize() == this->getRowSize());
+    assert(this->headersMap.size() == headersMapSize);
+    assert(this->headersVector.size() == headersVectorSize);
+    assert(this->rowVector.size() == rowVectorSize);  
+
+    return new_df;
 }
 
 void DataFrame::show(size_t size)
@@ -482,5 +551,3 @@ void DataFrame::show(size_t size)
         cerr << endl;
     }
 }
-
-std::map<std::string, size_t> DataFrame::headersMap;

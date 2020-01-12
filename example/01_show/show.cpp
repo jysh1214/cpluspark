@@ -12,11 +12,14 @@ int main()
         std::cerr << row[2] << std::endl;
     }
 
+    size_t userID = df.getHeaderValue("userID");
+    size_t A = df.getHeaderValue("A");
+    size_t B = df.getHeaderValue("B");
     // dataframe iterator
     for(auto row: df.dfIterator()){
-        std::cerr << row["userID"] << ",";
-        std::cerr << row["A"] << ",";
-        std::cerr << row["B"] << std::endl;
+        std::cerr << row[userID] << ",";
+        std::cerr << row[A] << ",";
+        std::cerr << row[B] << std::endl;
     }
 
     df.show(10);
