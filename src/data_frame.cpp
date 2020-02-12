@@ -10,40 +10,6 @@ inline bool exist(std::string str, std::vector<std::string>& vec){
 
 using namespace cs;
 
-DataFrame::Row::Row(std::vector<std::string>& row): db_row(row){}
-
-DataFrame::Row::Row(std::vector<std::string>&& row): db_row(row){}
-
-std::string& DataFrame::Row::operator[](size_t i)
-{
-    return this->db_row[i];
-}
-
-size_t DataFrame::Row::size()
-{
-    return db_row.size();
-}
-
-void DataFrame::Row::push_back(std::string str)
-{
-    db_row.push_back(str);
-}
-
-void DataFrame::Row::print(size_t i)
-{
-    if (db_row[i].c_str() == nullptr || db_row[i].size() == 0){
-        std::cerr << "null";
-    }
-    else{
-        std::cerr << db_row[i];
-    }
-}
-
-void DataFrame::Row::erase(size_t i)
-{
-    db_row.erase(db_row.begin() + i);
-}
-
 DataFrame::DataFrame(){}
 
 DataFrame::DataFrame(const DataFrame* old_df)
@@ -113,7 +79,7 @@ size_t DataFrame::getHeaderValue(const std::string header)
     return this->headersMap[header];
 }
 
-std::vector<DataFrame::Row>& DataFrame::dfIterator()
+std::vector<Row>& DataFrame::dfIterator()
 {
     return this->rowVector;
 }
@@ -533,21 +499,24 @@ void DataFrame::show(size_t size)
     // precondition
     assert(size <= this->rowVector.size());
 
-    using namespace std;
-    size_t colSize = this->headersVector.size();
+    Visualization vis(this->headersVector, this->rowVector, size);
+    vis.showTable();
 
-    for (size_t i=0; i<colSize; i++){
-        cerr << this->headersVector[i];
-        if (i != colSize-1) cerr << ",";
-    }
-    cerr << endl;
+    // using namespace std;
+    // size_t colSize = this->headersVector.size();
 
-    for (size_t i=0; i<size; i++){
-        for (size_t j=0; j<colSize; j++){
-            this->rowVector[i].print(j);
-            if (j != colSize-1) cerr << ",";
-            else continue;
-        }
-        cerr << endl;
-    }
+    // for (size_t i=0; i<colSize; i++){
+    //     cerr << this->headersVector[i];
+    //     if (i != colSize-1) cerr << ",";
+    // }
+    // cerr << endl;
+
+    // for (size_t i=0; i<size; i++){
+    //     for (size_t j=0; j<colSize; j++){
+    //         this->rowVector[i].print(j);
+    //         if (j != colSize-1) cerr << ",";
+    //         else continue;
+    //     }
+    //     cerr << endl;
+    // }
 }

@@ -3,5 +3,7 @@
 
 #include "../src/data_frame.h"
 #include "../src/parser.h"
+#include "../src/row.h"
+#include "../src/visualization.h"
 
 #endif

@@ -1,6 +1,9 @@
 #ifndef DATA_FRAME_H
 #define DATA_FRAME_H
 
+#include "row.h"
+#include "visualization.h"
+
 #include <algorithm>
 #include <assert.h>
 #include <vector>
@@ -22,20 +25,6 @@ public:
     DataFrame(const DataFrame&);
     virtual ~DataFrame(){}
 
-    struct Row: public std::vector<std::string>
-    {
-        Row(std::vector<std::string>& row);
-        Row(std::vector<std::string>&& row);
-        std::string& operator[](size_t i);
-        std::string& operator[](std::string str);
-        size_t size();
-        void push_back(std::string str);
-        void print(size_t i);
-        void erase(size_t i);
-        private:
-        std::vector<std::string> db_row;
-    };
-    
     void addHeaders(std::vector<std::string>& headers);
     void addRow(std::vector<std::string>& row);
     size_t getRowSize();
@@ -54,7 +43,6 @@ public:
     void addCol(const std::string newHeader);
     void removeCol(const std::string header);
     DataFrame selectCol(const std::initializer_list<std::string> list);
-
     void show(size_t size);
 
 private:
