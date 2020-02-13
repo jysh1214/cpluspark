@@ -38,7 +38,10 @@ cvs_helper& cvs_helper::withHeaders(std::initializer_list<std::string> list)
 DataFrame cvs_helper::createDF()
 {
     // precondition
-    assert(this->splitSetting && this->headerSetting);
+    assert(this->splitSetting && 
+    "cvs_helper::createDF() error: Split char is not set.");
+    assert(this->headerSetting &&
+    "cvs_helper::createDF() error: Dataframe header is not set.");
 
     using namespace std;
     
@@ -79,8 +82,8 @@ cvs_helper Parser::readCVS(const char* filePath)
     using namespace std;
 
     struct stat _st;
-    // precondition
-    assert(lstat(filePath, &_st) != -1);
+    assert(lstat(filePath, &_st) != -1 &&
+    "Parser::readCVS error: File is not found.");
 
     string fileName(filePath);
     if(fileName.substr(fileName.size()-4, 4) != ".csv"){
