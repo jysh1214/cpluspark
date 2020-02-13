@@ -501,22 +501,4 @@ void DataFrame::show(size_t size)
 
     Visualization vis(this->headersVector, this->rowVector, size);
     vis.showTable();
-
-    // using namespace std;
-    // size_t colSize = this->headersVector.size();
-
-    // for (size_t i=0; i<colSize; i++){
-    //     cerr << this->headersVector[i];
-    //     if (i != colSize-1) cerr << ",";
-    // }
-    // cerr << endl;
-
-    // for (size_t i=0; i<size; i++){
-    //     for (size_t j=0; j<colSize; j++){
-    //         this->rowVector[i].print(j);
-    //         if (j != colSize-1) cerr << ",";
-    //         else continue;
-    //     }
-    //     cerr << endl;
-    // }
 }

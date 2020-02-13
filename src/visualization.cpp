@@ -2,7 +2,7 @@
 
 using namespace cs;
 
-inline void renderSplitLine(size_t col, int* colMaxSize)
+inline void drawSplitLine(size_t col, int* colMaxSize)
 {
     for (size_t i=0; i<col; ++i){
         cerr << "+";
@@ -25,22 +25,25 @@ void Visualization::showTable()
     // record column max length
     size_t col = headersPtr->size();
     int* colMaxSize = (int*) new int[col];
-    int count = 0;
 
+    int count = 0;
     for (vector<string>::iterator it=headersPtr->begin(); it!=headersPtr->end(); ++it){
         colMaxSize[count] = ((*it).size() > MAX_SIZE)? MAX_SIZE: (*it).size();
         ++count;
     }
 
-    for (size_t i=0; i<showNum; ++i){
-        for (size_t c=0; c<col; ++c){
-            colMaxSize[c] = (rowPtr[c].size() > MAX_SIZE)? MAX_SIZE: rowPtr[c].size();
-        } // for each item of row
-    } // for each row
+    size_t showTimes = 0;
+    for (vector<Row>::iterator it=rowPtr->begin(); it!=rowPtr->end(); ++it){
+        for (size_t i=0; i<col; ++i){
+            if ((int)(*it)[i].size() > colMaxSize[i])
+                colMaxSize[i] = ((*it)[i].size() > MAX_SIZE)? MAX_SIZE: (*it)[i].size();
+        } // fro each row item
+        ++showTimes;
+        if (showTimes == showNum) break;
+    }
 
-    // render
-    renderSplitLine(col, colMaxSize);
-
+    drawSplitLine(col, colMaxSize);
+    // headers
     vector<string>::iterator it=headersPtr->begin();
     for (size_t i=0; i<col; ++i){
             cerr << "|";
@@ -57,7 +60,29 @@ void Visualization::showTable()
     }
     cerr << "|" << endl;
 
-    renderSplitLine(col, colMaxSize);
+    drawSplitLine(col, colMaxSize);
+
+    // content
+    showTimes = 0;
+    for (vector<Row>::iterator it=rowPtr->begin(); it!=rowPtr->end(); ++it){
+        for (size_t i=0; i<col; ++i){
+                cerr << "|";
+                if ((*it)[i].size() > MAX_SIZE){
+                    cerr << (*it)[i].substr(0, 7) + "...";
+                }
+                else {
+                    cerr << (*it)[i];
+                    // fill space
+                    for (int j=0; j<(colMaxSize[i]-(int)(*it)[i].size()); ++j) 
+                        cerr << " "; 
+                }
+        }
+        cerr << "|" << endl;
+        ++showTimes;
+        if (showTimes == showNum) break;
+    }
+
+    drawSplitLine(col, colMaxSize);
 
     delete colMaxSize;
 }
