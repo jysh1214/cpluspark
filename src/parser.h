@@ -34,7 +34,7 @@ struct cvs_helper
     std::string cvs_content;
     char split;
 
-    private:
+private:
     std::vector<std::string> customizedHeaders;
     bool headerSetting = false;
     bool splitSetting = false;
@@ -42,7 +42,7 @@ struct cvs_helper
 
 class Parser
 {
-    public:
+public:
     Parser();
     virtual ~Parser(){}
 

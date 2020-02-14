@@ -44,7 +44,7 @@ void Visualization::showTable()
 
     drawSplitLine(col, colMaxSize);
     // headers
-    vector<string>::iterator it=headersPtr->begin();
+    vector<string>::iterator it = headersPtr->begin();
     for (size_t i=0; i<col; ++i){
             cerr << "|";
             if ((*it).size() > MAX_SIZE){

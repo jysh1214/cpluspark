@@ -39,9 +39,9 @@ DataFrame cvs_helper::createDF()
 {
     // precondition
     assert(this->splitSetting && 
-    "cvs_helper::createDF() error: Split char is not set.");
+    "cvs_helper::createDF() error: Split char is not setted.");
     assert(this->headerSetting &&
-    "cvs_helper::createDF() error: Dataframe header is not set.");
+    "cvs_helper::createDF() error: Dataframe header is not setted.");
 
     using namespace std;
     
