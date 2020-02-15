@@ -2,12 +2,21 @@
 #define MERGE_H
 
 #include "data_frame.h"
-#include "utils.h"
 
 using namespace std;
 
 namespace cs
 {
+
+inline void addEmptyRow(DataFrame& df)
+{
+    vector<string> row;
+    for (size_t i=0; i<df.getColSize(); ++i){
+        row.push_back("");
+    }
+
+    df.addRow(row);
+}
 
 DataFrame merge(DataFrame& df_1, DataFrame& df_2)
 {

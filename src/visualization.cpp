@@ -13,6 +13,7 @@ inline void drawSplitLine(size_t col, int* colMaxSize)
     cerr << "+" << endl;
 }
 
+
 Visualization::Visualization(vector<string>& headersVector, vector<Row>& rowVector, size_t showNum)
 {
     this->headersPtr = &headersVector;
