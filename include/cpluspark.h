@@ -6,6 +6,7 @@
 #include "../src/parser.h"
 #include "../src/row.h"
 #include "../src/save_module.h"
+#include "../src/utils.h"
 #include "../src/visualization.h"
 
 #endif
