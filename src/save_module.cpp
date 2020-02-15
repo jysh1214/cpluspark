@@ -14,7 +14,7 @@ save_csv_helper& save_csv_helper::splitBy(const char split)
 void save_csv_helper::saveLocal(const char* savefile)
 {
     assert(this->splitSetting &&
-    "save_csv_helper::saveLocal error: Split char is not setted.");
+    "cs::save_csv_helper::saveLocal error: Split char is not setted.\n");
 
     ofstream file(savefile);
 

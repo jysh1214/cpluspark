@@ -32,6 +32,7 @@ public:
     std::vector<std::string> getHeaders();
     size_t getHeaderValue(const std::string header);
     std::vector<Row>& dfIterator();
+    Row& getRow(size_t i);
     template<typename T> // std::string, int, float, double, long
     void sortBy(const std::string header, const char op);
     template<typename T> // std::string, int, float, double, long
@@ -43,7 +44,10 @@ public:
     void addCol(const std::string newHeader);
     void removeCol(const std::string header);
     DataFrame selectCol(const std::initializer_list<std::string> list);
+    void show();
     void show(size_t size);
+
+    void resetHeadersMap();
 
 private:
     std::map<std::string, size_t> headersMap;

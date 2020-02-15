@@ -39,9 +39,9 @@ DataFrame cvs_helper::createDF()
 {
     // precondition
     assert(this->splitSetting && 
-    "cvs_helper::createDF() error: Split char is not setted.");
+    "cs::cvs_helper::createDF() error: Split char is not setted.\n");
     assert(this->headerSetting &&
-    "cvs_helper::createDF() error: Dataframe header is not setted.");
+    "cs::cvs_helper::createDF() error: Dataframe header is not setted.\n");
 
     using namespace std;
     
@@ -83,7 +83,7 @@ cvs_helper Parser::readCVS(const char* filePath)
 
     struct stat _st;
     assert(lstat(filePath, &_st) != -1 &&
-    "Parser::readCVS error: File is not found.");
+    "cs::Parser::readCVS error: File is not found.\n");
 
     string fileName(filePath);
     if(fileName.substr(fileName.size()-4, 4) != ".csv"){

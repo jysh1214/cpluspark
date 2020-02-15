@@ -39,10 +39,11 @@ DataFrame::DataFrame(const DataFrame& old_df)
 void DataFrame::addHeaders(std::vector<std::string>& headers)
 {
     try{
-        int i = -1;
+        size_t i = 0;
         for (auto header: headers){
             this->headersVector.push_back(header);
-            this->headersMap[header] = i += 1;
+            this->headersMap[header] = i;
+            ++i;
         }
     } catch(const std::exception& e) {
         std::cerr << e.what() << std::endl;
@@ -84,6 +85,11 @@ std::vector<Row>& DataFrame::dfIterator()
     return this->rowVector;
 }
 
+Row& DataFrame::getRow(size_t i)
+{
+    return this->rowVector[i];
+}
+
 template<>
 void DataFrame::sortBy<std::string>(const std::string header, const char op)
 {
@@ -105,7 +111,7 @@ template<>
 void DataFrame::sortBy<int>(const std::string header, const char op)
 {
     assert((op == '<' || op == '>') &&
-    "DataFrame::sortBy error: Use '<' or '>'.");
+    "cs::DataFrame::sortBy error: Use '<' or '>'.\n");
 
     size_t headerValue = this->headersMap[header];
     if (op == '<'){
@@ -124,7 +130,7 @@ template<>
 void DataFrame::sortBy<float>(const std::string header, const char op)
 {
     assert((op == '<' || op == '>') &&
-    "DataFrame::sortBy error: Use '<' or '>'.");
+    "cs::DataFrame::sortBy error: Use '<' or '>'.\n");
 
     size_t headerValue = this->headersMap[header];
     if (op == '<'){
@@ -143,7 +149,7 @@ template<>
 void DataFrame::sortBy<double>(const std::string header, const char op)
 {
     assert((op == '<' || op == '>') &&
-    "DataFrame::sortBy error: Use '<' or '>'.");
+    "cs::DataFrame::sortBy error: Use '<' or '>'.\n");
 
     size_t headerValue = this->headersMap[header];
     if (op == '<'){
@@ -162,7 +168,7 @@ template<>
 void DataFrame::sortBy<long>(const std::string header, const char op)
 {
     assert((op == '<' || op == '>') &&
-    "DataFrame::sortBy error: Use '<' or '>'.");
+    "cs::DataFrame::sortBy error: Use '<' or '>'.\n");
 
     size_t headerValue = this->headersMap[header];
     if (op == '<'){
@@ -181,7 +187,7 @@ template<>
 std::string DataFrame::getMax<std::string>(const std::string header)
 {
     assert(exist(header, this->headersVector) &&
-    "DataFrame::getMax error: Header does not exist.");
+    "cs::DataFrame::getMax error: Header does not exist.\n");
 
     size_t headerValue = this->headersMap[header];
     std::string max = this->rowVector[0][headerValue];
@@ -197,7 +203,7 @@ template<>
 int DataFrame::getMax<int>(const std::string header)
 {
     assert(exist(header, this->headersVector) &&
-    "DataFrame::getMax error: Header does not exist.");
+    "cs::DataFrame::getMax error: Header does not exist.\n");
 
     size_t headerValue = this->headersMap[header];
     int max = std::stoi(this->rowVector[0][headerValue]);
@@ -213,7 +219,7 @@ template<>
 float DataFrame::getMax<float>(const std::string header)
 {
     assert(exist(header, this->headersVector) &&
-    "DataFrame::getMax error: Header does not exist.");
+    "cs::DataFrame::getMax error: Header does not exist.\n");
 
     size_t headerValue = this->headersMap[header];
     float max = std::stof(this->rowVector[0][headerValue]);
@@ -229,7 +235,7 @@ template<>
 double DataFrame::getMax<double>(const std::string header)
 {
     assert(exist(header, this->headersVector) &&
-    "DataFrame::getMax error: Header does not exist.");
+    "cs::DataFrame::getMax error: Header does not exist.\n");
 
     size_t headerValue = this->headersMap[header];
     double max = std::stod(this->rowVector[0][headerValue]);
@@ -245,7 +251,7 @@ template<>
 long DataFrame::getMax<long>(const std::string header)
 {
     assert(exist(header, this->headersVector) &&
-    "DataFrame::getMax error: Header does not exist.");
+    "cs::DataFrame::getMax error: Header does not exist.\n");
 
     size_t headerValue = this->headersMap[header];
     long max = std::stol(this->rowVector[0][headerValue]);
@@ -261,7 +267,7 @@ template<>
 std::string DataFrame::getMin<std::string>(const std::string header)
 {
     assert(exist(header, this->headersVector) &&
-    "DataFrame::getMin error: Header does not exist.");
+    "cs::DataFrame::getMin error: Header does not exist.\n");
 
     size_t headerValue = this->headersMap[header];
     std::string min = this->rowVector[0][headerValue];
@@ -277,7 +283,7 @@ template<>
 int DataFrame::getMin<int>(const std::string header)
 {
     assert(exist(header, this->headersVector) &&
-    "DataFrame::getMin error: Header does not exist.");
+    "cs::DataFrame::getMin error: Header does not exist.\n");
 
     size_t headerValue = this->headersMap[header];
     int min = std::stoi(this->rowVector[0][headerValue]);
@@ -293,7 +299,7 @@ template<>
 float DataFrame::getMin<float>(const std::string header)
 {
     assert(exist(header, this->headersVector) &&
-    "DataFrame::getMin error: Header does not exist.");
+    "cs::DataFrame::getMin error: Header does not exist.\n");
 
     size_t headerValue = this->headersMap[header];
     float min = std::stof(this->rowVector[0][headerValue]);
@@ -309,7 +315,7 @@ template<>
 double DataFrame::getMin<double>(const std::string header)
 {
     assert(exist(header, this->headersVector) &&
-    "DataFrame::getMin error: Header does not exist.");
+    "cs::DataFrame::getMin error: Header does not exist.\n");
 
     size_t headerValue = this->headersMap[header];
     float min = std::stod(this->rowVector[0][headerValue]);
@@ -325,7 +331,7 @@ template<>
 long DataFrame::getMin<long>(const std::string header)
 {
     assert(exist(header, this->headersVector) &&
-    "DataFrame::getMin error: Header does not exist.");
+    "cs::DataFrame::getMin error: Header does not exist.\n");
 
     size_t headerValue = this->headersMap[header];
     float min = std::stol(this->rowVector[0][headerValue]);
@@ -341,7 +347,7 @@ template<>
 int DataFrame::getAvg<int>(const std::string header)
 {
     assert(exist(header, this->headersVector) &&
-    "DataFrame::getAvg error: Header does not exist.");
+    "cs::DataFrame::getAvg error: Header does not exist.\n");
     if (this->rowVector.size() == 0) return 0;
 
     size_t headerValue = this->headersMap[header];
@@ -357,7 +363,7 @@ template<>
 float DataFrame::getAvg<float>(const std::string header)
 {
     assert(exist(header, this->headersVector) &&
-    "DataFrame::getAvg error: Header does not exist.");
+    "cs::DataFrame::getAvg error: Header does not exist.\n");
     if (this->rowVector.size() == 0) return 0;
 
     size_t headerValue = this->headersMap[header];
@@ -373,7 +379,7 @@ template<>
 double DataFrame::getAvg<double>(const std::string header)
 {
     assert(exist(header, this->headersVector) &&
-    "DataFrame::getAvg error: Header does not exist.");
+    "cs::DataFrame::getAvg error: Header does not exist.\n");
     if (this->rowVector.size() == 0) return 0;
 
     size_t headerValue = this->headersMap[header];
@@ -389,7 +395,7 @@ template<>
 long DataFrame::getAvg<long>(const std::string header)
 {
     assert(exist(header, this->headersVector) &&
-    "DataFrame::getAvg error: Header does not exist.");
+    "cs::DataFrame::getAvg error: Header does not exist.\n");
     if (this->rowVector.size() == 0) return 0;
 
     size_t headerValue = this->headersMap[header];
@@ -407,7 +413,7 @@ void DataFrame::addCol(const std::string newHeader)
         for (auto item: DataFrame::headersMap){
             if (item.first == newHeader) return false;
         } return true;
-    })() && "DataFrame::addCol error: The header exist.");
+    })() && "cs::DataFrame::addCol error: The header exist.\n");
     size_t headersMapSize = this->headersMap.size();
     size_t headersVectorSize = this->headersVector.size();
     size_t rowVectorSize = this->rowVector.size();
@@ -430,7 +436,7 @@ void DataFrame::removeCol(const std::string header)
         for (auto item: DataFrame::headersMap){
             if (item.first == header) return true;
         } return false;
-    })() && "DataFrame::removeCol error: The header does not exist.");
+    })() && "cs::DataFrame::removeCol error: The header does not exist.\n");
     size_t headersMapSize = this->headersMap.size();
     size_t headersVectorSize = this->headersVector.size();
     size_t rowVectorSize = this->rowVector.size();
@@ -444,9 +450,10 @@ void DataFrame::removeCol(const std::string header)
 
     // reset headersMap
     this->headersMap.clear();
-    int i = -1;
+    size_t i = 0;
     for (auto header: this->headersVector){
-        this->headersMap[header] = i += 1;
+        this->headersMap[header] = i;
+        ++i;
     }
 
     assert(this->headersMap.size() == headersMapSize - 1);
@@ -462,7 +469,7 @@ DataFrame DataFrame::selectCol(const std::initializer_list<std::string> list)
                 return false;
         }
         return true;
-    })() && "DataFrame::selectCol error: The header does not exist.");
+    })() && "cs::DataFrame::selectCol error: The header does not exist.\n");
     std::vector<std::string> list_vec = list;
 
     DataFrame new_df(this);
@@ -479,11 +486,29 @@ DataFrame DataFrame::selectCol(const std::initializer_list<std::string> list)
     return new_df;
 }
 
-void DataFrame::show(size_t size)
+void DataFrame::show()
 {
-    assert((size <= this->rowVector.size()) && 
-    "DataFrame::show error: Input size must <= dataframe size.");
+    size_t size = (10 > this->rowVector.size())? this->rowVector.size(): 10;
 
     Visualization vis(this->headersVector, this->rowVector, size);
     vis.showTable();
+}
+
+void DataFrame::show(size_t size)
+{
+    assert((size <= this->rowVector.size()) && 
+    "cs::DataFrame::show error: Input size must <= dataframe size.\n");
+
+    Visualization vis(this->headersVector, this->rowVector, size);
+    vis.showTable();
+}
+
+void DataFrame::resetHeadersMap()
+{
+    this->headersMap.clear();
+    size_t i = 0;
+    for (auto header: this->headersVector){
+        this->headersMap[header] = i;
+        ++i;
+    }
 }

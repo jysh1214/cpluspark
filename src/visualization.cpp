@@ -84,6 +84,9 @@ void Visualization::showTable()
     }
 
     drawSplitLine(col, colMaxSize);
-    cerr << "Just show first " << this->showNum << " row." << endl;
+
+    if ((this->rowPtr)->size() < this->showNum)
+        cerr << "Just show top " << this->showNum << " row." << endl;
+
     delete colMaxSize;
 }
