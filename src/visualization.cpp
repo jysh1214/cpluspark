@@ -43,6 +43,7 @@ void Visualization::showTable()
     }
 
     drawSplitLine(col, colMaxSize);
+
     // headers
     vector<string>::iterator it = headersPtr->begin();
     for (size_t i=0; i<col; ++i){
@@ -62,7 +63,7 @@ void Visualization::showTable()
 
     drawSplitLine(col, colMaxSize);
 
-    // content
+    // table
     showTimes = 0;
     for (vector<Row>::iterator it=rowPtr->begin(); it!=rowPtr->end(); ++it){
         for (size_t i=0; i<col; ++i){
@@ -83,6 +84,6 @@ void Visualization::showTable()
     }
 
     drawSplitLine(col, colMaxSize);
-
+    cerr << "Just show first " << this->showNum << " row." << endl;
     delete colMaxSize;
 }

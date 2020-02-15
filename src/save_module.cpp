@@ -22,7 +22,7 @@ void save_csv_helper::saveLocal(const char* savefile)
     std::vector<std::string> headers = (this->df)->getHeaders();
     for (size_t i=0; i<headers.size(); ++i){
         file << headers[i];
-        if (i != headers.size()-1) file << this->split;
+        if (i != headers.size()-1) file << (this->split);
     }
     file << std::endl;
 
@@ -49,6 +49,5 @@ SaveModule& SaveModule::saveDF(DataFrame& df)
 
 save_csv_helper SaveModule::asCVS()
 {
-    save_csv_helper temp(this->df);
     return save_csv_helper(this->df);
 }

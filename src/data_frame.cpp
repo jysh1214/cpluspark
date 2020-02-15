@@ -419,10 +419,8 @@ void DataFrame::addCol(const std::string newHeader)
         row.push_back(std::string(""));
     }
     
-    // postconditions
     assert(this->headersMap.size() == headersMapSize + 1);
     assert(this->headersVector.size() == headersVectorSize + 1);
-    // invariants
     assert(this->rowVector.size() == rowVectorSize);
 }
 
@@ -451,16 +449,13 @@ void DataFrame::removeCol(const std::string header)
         this->headersMap[header] = i += 1;
     }
 
-    // postconditions
     assert(this->headersMap.size() == headersMapSize - 1);
     assert(this->headersVector.size() == headersVectorSize - 1);
-    // invariants
     assert(this->rowVector.size() == rowVectorSize);
 }
 
 DataFrame DataFrame::selectCol(const std::initializer_list<std::string> list)
 {
-    // precondition
     assert(([=]()-> bool{
         for (auto item: list){
             if (!exist(item, this->headersVector))
@@ -468,9 +463,6 @@ DataFrame DataFrame::selectCol(const std::initializer_list<std::string> list)
         }
         return true;
     })() && "DataFrame::selectCol error: The header does not exist.");
-    size_t headersMapSize = this->headersMap.size();
-    size_t headersVectorSize = this->headersVector.size();
-    size_t rowVectorSize = this->rowVector.size();
     std::vector<std::string> list_vec = list;
 
     DataFrame new_df(this);
@@ -480,14 +472,9 @@ DataFrame DataFrame::selectCol(const std::initializer_list<std::string> list)
         }
     }
 
-    // postconditions
     assert(new_df.getColSize() == list.size());
     assert(new_df.headersMap.size() == list.size());
-    // invariants
     assert(new_df.getRowSize() == this->getRowSize());
-    assert(this->headersMap.size() == headersMapSize);
-    assert(this->headersVector.size() == headersVectorSize);
-    assert(this->rowVector.size() == rowVectorSize);  
 
     return new_df;
 }
