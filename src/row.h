@@ -5,21 +5,23 @@
 #include <vector>
 #include <string>
 
+using namespace std;
+
 namespace cs
 {
 
-struct Row: public std::vector<std::string>
+struct Row: public vector<string>
 {
-    Row(std::vector<std::string>& row);
-    Row(std::vector<std::string>&& row);
-    std::string& operator[](size_t i);
+    Row(vector<string>& row);
+    Row(vector<string>&& row);
+    string& operator[](size_t i);
     size_t size();
-    void push_back(std::string str);
+    void push_back(string str);
     void print(size_t i);
     void erase(size_t i);
 
     private:
-    std::vector<std::string> db_row;
+    vector<string> db_row;
 };
 
 } // namespace cs

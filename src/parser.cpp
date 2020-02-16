@@ -4,7 +4,7 @@ using namespace cs;
 
 cvs_helper::cvs_helper(){}
 
-cvs_helper::cvs_helper(std::string str): cvs_content(str){}
+cvs_helper::cvs_helper(string str): cvs_content(str){}
 
 cvs_helper::cvs_helper(cvs_helper& cvs_helper)
 {
@@ -25,9 +25,9 @@ cvs_helper& cvs_helper::withDefaultHeaders()
     return *this;
 }
 
-cvs_helper& cvs_helper::withHeaders(std::initializer_list<std::string> list)
+cvs_helper& cvs_helper::withHeaders(initializer_list<string> list)
 {
-    for (std::string header: list)
+    for (string header: list)
         this->customizedHeaders.push_back(header);
 
     this->withHeads = false;
@@ -37,11 +37,10 @@ cvs_helper& cvs_helper::withHeaders(std::initializer_list<std::string> list)
 
 DataFrame cvs_helper::createDF()
 {
-    // precondition
     assert(this->splitSetting && 
-    "cs::cvs_helper::createDF() error: Split char is not setted.\n");
+    "cs::cvs_helper::createDF() Error: Split char is not setted.\n");
     assert(this->headerSetting &&
-    "cs::cvs_helper::createDF() error: Dataframe header is not setted.\n");
+    "cs::cvs_helper::createDF() Error: Dataframe header is not setted.\n");
 
     using namespace std;
     
@@ -54,9 +53,10 @@ DataFrame cvs_helper::createDF()
     vector<string> row;
     for (string::size_type i = 0; i <= this->cvs_content.size(); ++i){
         if (cvs_content[i] == this->split || cvs_content[i] == '\n' || i == cvs_content.size()){
+
             string item = cvs_content.substr(current_point, i-current_point);
             current_point = i + 1;
-            if (item.size() > 0) row.push_back(item);
+            if (!item.empty()) row.push_back(item);
         }
         // get headers in first line
         if (this->withHeads && cvs_content[i] == '\n'){
@@ -83,7 +83,7 @@ cvs_helper Parser::readCVS(const char* filePath)
 
     struct stat _st;
     assert(lstat(filePath, &_st) != -1 &&
-    "cs::Parser::readCVS error: File is not found.\n");
+    "cs::Parser::readCVS Error: File is not found.\n");
 
     string fileName(filePath);
     if(fileName.substr(fileName.size()-4, 4) != ".csv"){

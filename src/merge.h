@@ -33,7 +33,7 @@ DataFrame merge(DataFrame& df_1, DataFrame& df_2)
             }
         }
         return true;
-    })() && "cs::merge error: Same header was detected.\n");
+    })() && "cs::merge Error: Same header was detected.\n");
 
 
     size_t maxRow = max(df_1_ptr->getRowSize(), df_2_ptr->getRowSize());

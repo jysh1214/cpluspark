@@ -14,6 +14,8 @@
 #include <type_traits>
 #include <initializer_list>
 
+using namespace std;
+
 namespace cs
 {
 
@@ -25,34 +27,35 @@ public:
     DataFrame(const DataFrame&);
     virtual ~DataFrame(){}
 
-    void addHeaders(std::vector<std::string>& headers);
-    void addRow(std::vector<std::string>& row);
+    void addHeaders(vector<string>& headers);
+    void addRow(vector<string>& row);
+    void addRow(Row& row);
     size_t getRowSize();
     size_t getColSize();
-    std::vector<std::string> getHeaders();
-    size_t getHeaderValue(const std::string header);
-    std::vector<Row>& dfIterator();
+    vector<string> getHeaders();
+    size_t getHeaderValue(const string header);
+    vector<Row>& dfIterator();
     Row& getRow(size_t i);
     template<typename T> // std::string, int, float, double, long
-    void sortBy(const std::string header, const char op);
+    void sortBy(const string header, const char op);
     template<typename T> // std::string, int, float, double, long
-    T getMax(const std::string header);
+    T getMax(const string header);
     template<typename T> // std::string, int, float, double, long
-    T getMin(const std::string header);
+    T getMin(const string header);
     template<typename T> // int, float, double, long
-    T getAvg(const std::string header);
-    void addCol(const std::string newHeader);
-    void removeCol(const std::string header);
-    DataFrame selectCol(const std::initializer_list<std::string> list);
+    T getAvg(const string header);
+    void addCol(const string newHeader);
+    void removeCol(const string header);
+    DataFrame selectCol(const initializer_list<string> list);
     void show();
     void show(size_t size);
 
     void resetHeadersMap();
 
 private:
-    std::map<std::string, size_t> headersMap;
-    std::vector<std::string> headersVector;
-    std::vector<Row> rowVector;
+    map<string, size_t> headersMap;
+    vector<string> headersVector;
+    vector<Row> rowVector;
 };
 
 } // namespace cs

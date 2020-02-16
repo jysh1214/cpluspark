@@ -1,6 +1,7 @@
 #ifndef CPLUSPARK_H
 #define CPLUSPARK_H
 
+#include "../src/concat.h"
 #include "../src/data_frame.h"
 #include "../src/merge.h"
 #include "../src/parser.h"

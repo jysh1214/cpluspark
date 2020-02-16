@@ -14,17 +14,17 @@ save_csv_helper& save_csv_helper::splitBy(const char split)
 void save_csv_helper::saveLocal(const char* savefile)
 {
     assert(this->splitSetting &&
-    "cs::save_csv_helper::saveLocal error: Split char is not setted.\n");
+    "cs::save_csv_helper::saveLocal Error: Split char is not setted.\n");
 
     ofstream file(savefile);
 
     // write headers
-    std::vector<std::string> headers = (this->df)->getHeaders();
+    vector<string> headers = (this->df)->getHeaders();
     for (size_t i=0; i<headers.size(); ++i){
         file << headers[i];
         if (i != headers.size()-1) file << (this->split);
     }
-    file << std::endl;
+    file << endl;
 
     // write table
     size_t col = (this->df)->getColSize();
@@ -33,7 +33,7 @@ void save_csv_helper::saveLocal(const char* savefile)
             file << row[i];
             if (i != headers.size()-1) file << this->split;
         }
-        file << std::endl;
+        file << endl;
     }
     
     file.close();
