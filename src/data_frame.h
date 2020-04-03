@@ -23,26 +23,26 @@ class DataFrame
 {
 public:
     DataFrame();
-    DataFrame(const DataFrame*);
-    DataFrame(const DataFrame&);
-    virtual ~DataFrame(){}
+    DataFrame(const DataFrame *);
+    DataFrame(const DataFrame &);
+    virtual ~DataFrame() {}
 
-    void addHeaders(vector<string>& headers);
-    void addRow(vector<string>& row);
-    void addRow(Row& row);
+    void addHeaders(vector<string> &headers);
+    void addRow(vector<string> &row);
+    void addRow(Row &row);
     size_t getRowSize();
     size_t getColSize();
     vector<string> getHeaders();
     size_t getHeaderValue(const string header);
-    vector<Row>& dfIterator();
-    Row& getRow(size_t i);
-    template<typename T> // std::string, int, float, double, long
+    vector<Row> &dfIterator();
+    Row &getRow(size_t i);
+    template <typename T> // std::string, int, float, double, long
     void sortBy(const string header, const char op);
-    template<typename T> // std::string, int, float, double, long
+    template <typename T> // std::string, int, float, double, long
     T getMax(const string header);
-    template<typename T> // std::string, int, float, double, long
+    template <typename T> // std::string, int, float, double, long
     T getMin(const string header);
-    template<typename T> // int, float, double, long
+    template <typename T> // int, float, double, long
     T getAvg(const string header);
     void addCol(const string newHeader);
     void removeCol(const string header);
