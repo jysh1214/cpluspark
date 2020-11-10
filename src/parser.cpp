@@ -52,7 +52,7 @@ DataFrame cvs_helper::createDF()
     int current_point = 0;
     vector<string> row;
     for (string::size_type i = 0; i <= this->cvs_content.size(); ++i){
-        if (cvs_content[i] == this->split || cvs_content[i] == '\n' || i == cvs_content.size()){
+        if (cvs_content[i] == this->split || cvs_content[i] == '\n' || i == cvs_content.size()-1) {
 
             string item = cvs_content.substr(current_point, i-current_point);
             current_point = i + 1;
